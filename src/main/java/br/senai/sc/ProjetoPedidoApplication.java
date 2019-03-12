@@ -27,13 +27,14 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Categoria cat1 = new Categoria(null,"Informática");
 		Produto p1 = new Produto(null,"Computador", 2000.00);
-		repo.save(cat1);
-		repro.save(p1);
-		
 		Categoria cat2 = new Categoria(null,"Escritório");
 		Produto p2 = new Produto(null,"Impressora", 800.00);
+		Produto p3 = new Produto(null,"Mouse", 80.00);
+		repo.save(cat1);
+		repro.save(p1);
 		repo.save(cat2);
 		repro.save(p2);
+		repro.save(p3);
 	}
 	
 	

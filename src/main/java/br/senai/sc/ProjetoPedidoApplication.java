@@ -30,6 +30,7 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 		Categoria cat2 = new Categoria(null,"Escritório");
 		Produto p2 = new Produto(null,"Impressora", 800.00);
 		Produto p3 = new Produto(null,"Mouse", 80.00);
+		
 		repo.save(cat1);
 		repro.save(p1);
 		repo.save(cat2);
@@ -37,6 +38,8 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 		repro.save(p3);
 	}
 	
+	//proxy rede10.1.118.254
+	//proxy git 10.1.118.254:3128
 	
 	
 	

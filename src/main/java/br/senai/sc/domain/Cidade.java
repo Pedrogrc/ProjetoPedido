@@ -1,51 +1,32 @@
 package br.senai.sc.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @Entity
-public class Produto implements Serializable{
+public class Cidade implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
 	private String nome;
-
-	private Double preco;
-
-	//Criação da tabela associativa
-	@ManyToMany
-	@JoinTable( name="PRODUTO_CATEGORIA",
-	joinColumns = @JoinColumn(name="produto_id"),
-	inverseJoinColumns = @JoinColumn(name="categoria_id"))
 	
-	private List<Categoria> categorias = new ArrayList<Categoria>();
-	
-	// Construtores
-	public Produto() {
-
+	public Cidade() {
 	}
-
-	public Produto(Integer id, String nome, Double preco) {
-
+	
+	public Cidade(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
 	}
 
-	// Getters e Setters
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -60,22 +41,6 @@ public class Produto implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
 	}
 
 	@Override
@@ -94,7 +59,7 @@ public class Produto implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -102,8 +67,7 @@ public class Produto implements Serializable{
 			return false;
 		return true;
 	}
-
 	
-
+	
 	
 }

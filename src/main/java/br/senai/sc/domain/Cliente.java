@@ -36,6 +36,9 @@ public class Cliente implements Serializable{
 	@CollectionTable(name="TELEFONES")
 	private Set<String> telefones = new HashSet<>();
 
+	@OneToMany(mappedBy="cliente")
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
+	
 	public Cliente() {
 		
 	}
@@ -72,7 +75,7 @@ public class Cliente implements Serializable{
 		this.cpfOuCnpj = cpfOuCnpj;
 	}
 	public TipoCliente getTipo() {
-		return TipoCliente.toEnum(tipo);
+		return TipoCliente.toEnum(this.tipo);
 	}
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCodigo();

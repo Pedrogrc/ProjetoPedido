@@ -1,5 +1,6 @@
 package br.senai.sc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,22 @@ import br.senai.sc.domain.Cidade;
 import br.senai.sc.domain.Cliente;
 import br.senai.sc.domain.Endereco;
 import br.senai.sc.domain.Estado;
+import br.senai.sc.domain.ItemPedido;
+import br.senai.sc.domain.Pagamento;
+import br.senai.sc.domain.PagamentoComBoleto;
+import br.senai.sc.domain.PagamentoComCartao;
+import br.senai.sc.domain.Pedido;
 import br.senai.sc.domain.Produto;
+import br.senai.sc.domain.enums.EstadoPagamento;
 import br.senai.sc.domain.enums.TipoCliente;
 import br.senai.sc.repositories.CategoriaRepository;
 import br.senai.sc.repositories.CidadeRepository;
 import br.senai.sc.repositories.ClienteRepository;
 import br.senai.sc.repositories.EnderecoRepository;
 import br.senai.sc.repositories.EstadoRepository;
+import br.senai.sc.repositories.ItemPedidoRepository;
+import br.senai.sc.repositories.PagamentoRepository;
+import br.senai.sc.repositories.PedidoRepository;
 import br.senai.sc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -45,6 +55,19 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itempedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+	
 	@Override
 	public void run(String... args) throws Exception {
 		//Categoria
@@ -66,11 +89,19 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 		//Endereço
 			Endereco e1 = new Endereco(null,"Rua Flores","300","Apto 203","Jardim","38220834",c1);
 			Endereco e2 = new Endereco(null,"Avenida Matos","105","Sala 800","Centro","38777012",c1);
+		//Pedido
+			Pedido ped1 = new Pedido(null,sdf.parse("30/09/2017 10:32"),cli1,e1);
+			Pedido ped2 = new Pedido(null,sdf.parse("20/10/2017 19:35"),cli1,e2);
+		//Item
+			ItemPedido item1 = new ItemPedido(ped1,p1,0.0,1,1000.0);
+			ItemPedido item2 = new ItemPedido(ped2,p3,0.0,1,1000.0);
+		//Pagamento
+			Pagamento pagto1 = new PagamentoComCartao(null,EstadoPagamento.PENDENTE,ped1,6);
 			
-		
+			Pagamento pagto2 = new PagamentoComBoleto(null,EstadoPagamento.PENDENTE,ped2,sdf2.parse("20/10/2017"),null);
 		
 		//Salvando na tabela de Associativa
-		
+	
 		//Produto para Categoria
 			p1.getCategorias().add(cat1);
 		//Categoria para produto
@@ -85,7 +116,9 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 			e2.setCliente(cli1);
 		//Salvando Endereços na lista endereços do Cliente
 			cli1.setEnderecos(Arrays.asList(e1,e2));
-			
+		//Pagamento
+			ped1.setPagamento(pagto1);
+			ped2.setPagamento(pagto2);
 			
 		//Telefones
 			cli1.getTelefones().add("(48)99999-8888");
@@ -113,6 +146,10 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 		//Endereços
 			enderecoRepository.save(e1);
 			enderecoRepository.save(e2);
+		//Pedido
+			pedidoRepository.save(ped1);
+		//ItemPedido
+			itempedidoRepository.save(item1);
 	}
 
 	// proxy rede10.1.118.254
